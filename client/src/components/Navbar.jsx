@@ -11,6 +11,12 @@ import { useEffect, useRef, useState } from "react";
 export default function Navbar({ variant = "home" }) {
   const navigate = useNavigate();
 
+  function logout() {
+    localStorage.removeItem("socratia_token");
+    localStorage.removeItem("socratia_user");
+    window.location.href = "/signin";
+  }
+
   // keep your original behavior
   const showHomeBtn =
     variant === "signin" || variant === "signup" || variant === "app";
@@ -18,13 +24,17 @@ export default function Navbar({ variant = "home" }) {
 
   const helperText =
     variant === "signup"
-      ? { text: "Already have an account? ", linkText: "Sign in", to: "/signin" }
+      ? {
+          text: "Already have an account? ",
+          linkText: "Sign in",
+          to: "/signin",
+        }
       : { text: "Don’t have an account? ", linkText: "Sign up", to: "/signup" };
 
-  // backend-ready user (later: replace with auth/db)
-  const user = {
-    name: "Alex",
-  };
+  // Logged-in user (stored after signin/signup)
+  const storedUser = localStorage.getItem("socratia_user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+  const displayName = user?.fullName || user?.email || "User";
 
   // dropdown
   const [open, setOpen] = useState(false);
@@ -64,7 +74,7 @@ export default function Navbar({ variant = "home" }) {
           {variant === "app" && (
             <div className="hidden sm:flex items-center gap-2 rounded-2xl border border-blue-400/15 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-blue-100 shadow-[0_0_24px_rgba(59,130,246,0.15)]">
               <span className="text-white/70">Welcome,</span>
-              <span className="text-white">{user.name}</span>
+              <span className="text-white">{displayName}</span>
             </div>
           )}
         </div>
@@ -113,20 +123,33 @@ export default function Navbar({ variant = "home" }) {
                 aria-expanded={open}
               >
                 <span className="text-base">👤</span>
-                <span className="hidden sm:inline text-sm">{user.name}</span>
+                <span className="hidden sm:inline text-sm">{displayName}</span>
                 <span className="text-xs text-white/60">▼</span>
               </button>
 
               {open && (
                 <div className="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f1a] shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
+                  {user?.role === "admin" && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOpen(false);
+                        navigate("/admin");
+                      }}
+                      className="w-full px-4 py-3 text-left text-sm text-blue-300 hover:bg-blue-500/10 transition"
+                    >
+                      Admin Panel
+                    </button>
+                  )}
+
                   <button
                     type="button"
-                    onClick={() =>
-                      confirmAndGo(
-                        "Sign out and go to Sign In?",
-                        "/signin"
-                      )
-                    }
+                    onClick={() => {
+                      const ok = window.confirm("Sign out and go to Sign In?");
+                      if (!ok) return;
+                      setOpen(false);
+                      logout();
+                    }}
                     className="w-full px-4 py-3 text-left text-sm text-white/90 hover:bg-white/10 transition"
                   >
                     Switch account
@@ -134,12 +157,14 @@ export default function Navbar({ variant = "home" }) {
 
                   <button
                     type="button"
-                    onClick={() =>
-                      confirmAndGo(
-                        "Are you sure you want to sign out?",
-                        "/"
-                      )
-                    }
+                    onClick={() => {
+                      const ok = window.confirm(
+                        "Are you sure you want to sign out?"
+                      );
+                      if (!ok) return;
+                      setOpen(false);
+                      logout();
+                    }}
                     className="w-full px-4 py-3 text-left text-sm text-red-300 hover:bg-red-500/10 transition"
                   >
                     Sign out

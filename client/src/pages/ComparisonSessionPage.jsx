@@ -3,6 +3,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 
 export default function ComparisonSessionPage() {
+  useEffect(() => {
+    const token = localStorage.getItem("socratia_token");
+    if (!token) {
+      window.location.href = "/signin";
+    }
+  }, []);
+
   const navigate = useNavigate();
   const location = useLocation();
   const bottomRef = useRef(null);
@@ -54,8 +61,7 @@ export default function ComparisonSessionPage() {
         {
           id: `a-${Date.now()}`,
           role: "assistant",
-          text:
-            "Good. Now be precise: what evidence in each paper supports your comparison? Mention where (abstract/method/experiments).",
+          text: "Good. Now be precise: what evidence in each paper supports your comparison? Mention where (abstract/method/experiments).",
         },
       ]);
       setThinking(false);
@@ -72,7 +78,8 @@ export default function ComparisonSessionPage() {
           <div>
             <div className="text-xs text-white/50">Comparison Session</div>
             <h1 className="mt-1 text-xl font-bold">
-              {paperA.name} <span className="text-white/40">vs</span> {paperB.name}
+              {paperA.name} <span className="text-white/40">vs</span>{" "}
+              {paperB.name}
             </h1>
           </div>
 
@@ -171,7 +178,9 @@ export default function ComparisonSessionPage() {
 
           {/* Side panel */}
           <aside className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-[0_0_35px_rgba(59,130,246,0.08)] backdrop-blur">
-            <div className="text-sm font-semibold text-white/90">Comparison notes</div>
+            <div className="text-sm font-semibold text-white/90">
+              Comparison notes
+            </div>
             <p className="mt-2 text-sm text-white/70">
               Write key similarities/differences you want to remember.
             </p>
@@ -182,9 +191,12 @@ export default function ComparisonSessionPage() {
             />
 
             <div className="mt-5 rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4">
-              <div className="text-xs font-semibold text-blue-100">Socratic tip</div>
+              <div className="text-xs font-semibold text-blue-100">
+                Socratic tip
+              </div>
               <div className="mt-1 text-sm text-white/75">
-                When you compare, always ask: “Compared to what?” and “Based on which evidence?”
+                When you compare, always ask: “Compared to what?” and “Based on
+                which evidence?”
               </div>
             </div>
           </aside>

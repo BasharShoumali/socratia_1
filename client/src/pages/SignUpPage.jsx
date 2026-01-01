@@ -1,38 +1,78 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import ReCAPTCHA from "react-google-recaptcha";
+import { apiFetch } from "../lib/api";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const recaptchaRef = useRef(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("socratia_token");
+    if (token) {
+      navigate("/workspace");
+    }
+  }, [navigate]);
 
   // Backend-ready state (later: send to API)
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [captchaToken, setCaptchaToken] = useState(null);
 
   // UI-only for now (later: set based on API response)
   const [error, setError] = useState("");
 
-  function onSubmit(e) {
+  function resetCaptcha() {
+    setCaptchaToken(null);
+    recaptchaRef.current?.reset();
+  }
+
+  async function onSubmit(e) {
     e.preventDefault();
     setError("");
 
-    // No backend/auth logic yet.
-    // Later: call your API here and on success navigate("/papers")
     if (!fullName || !email || !password) {
       setError("Please fill in all fields.");
       return;
     }
 
-    // Temporary navigation ONLY so flow is testable:
-    // (We will build /papers page later)
-    navigate("/papers");
+    if (!captchaToken) {
+      setError("Please verify that you are not a robot.");
+      return;
+    }
+
+    try {
+      const data = await apiFetch("/api/auth/signup", {
+        method: "POST",
+        body: {
+          fullName,
+          email,
+          password,
+          captchaToken,
+        },
+      });
+
+      localStorage.setItem("socratia_token", data.token);
+      localStorage.setItem("socratia_user", JSON.stringify(data.user));
+
+      resetCaptcha();
+
+      navigate("/signin", {
+        state: {
+          successMessage: "Account created successfully. Please sign in.",
+        },
+      });
+    } catch (err) {
+      setError(err?.message || "Signup failed.");
+      resetCaptcha();
+    }
   }
 
   return (
     <div className="min-h-screen bg-[radial-gradient(60%_40%_at_50%_0%,rgba(59,130,246,0.22),transparent_60%),linear-gradient(180deg,#05070f,#03040a)] text-white">
       <Navbar variant="signup" />
-
 
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="mx-auto grid max-w-4xl gap-6 lg:grid-cols-2">
@@ -43,8 +83,8 @@ export default function SignUpPage() {
             </h1>
 
             <p className="mt-3 text-sm leading-relaxed text-white/70">
-              Sign up to save your papers, track your learning sessions, and continue
-              anytime.
+              Sign up to save your papers, track your learning sessions, and
+              continue anytime.
             </p>
 
             <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
@@ -58,7 +98,10 @@ export default function SignUpPage() {
 
             <div className="mt-6 text-sm text-white/70">
               Already have an account?{" "}
-              <NavLink to="/signin" className="font-semibold text-blue-300 hover:text-blue-200">
+              <NavLink
+                to="/signin"
+                className="font-semibold text-blue-300 hover:text-blue-200"
+              >
                 Sign in
               </NavLink>
             </div>
@@ -117,6 +160,12 @@ export default function SignUpPage() {
                   </div>
                 ) : null}
 
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                  onChange={(token) => setCaptchaToken(token)}
+                />
+
                 <button
                   type="submit"
                   className="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(59,130,246,0.40)] hover:bg-blue-400 transition"
@@ -130,7 +179,10 @@ export default function SignUpPage() {
               </form>
 
               <div className="mt-6 flex items-center justify-between text-sm">
-                <NavLink to="/signin" className="text-white/70 hover:text-white">
+                <NavLink
+                  to="/signin"
+                  className="text-white/70 hover:text-white"
+                >
                   ← Back to Sign In
                 </NavLink>
               </div>

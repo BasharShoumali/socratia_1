@@ -3,20 +3,25 @@ import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 
 export default function SocraticSessionPage() {
+  useEffect(() => {
+    const token = localStorage.getItem("socratia_token");
+    if (!token) {
+      window.location.href = "/signin";
+    }
+  }, []);
+
   const navigate = useNavigate();
   const location = useLocation();
   const bottomRef = useRef(null);
 
   // Paper info passed from Workspace
-  const paperName =
-    location.state?.paperName || "Selected Paper";
+  const paperName = location.state?.paperName || "Selected Paper";
 
   const [messages, setMessages] = useState([
     {
       id: "s1",
       role: "assistant",
-      text:
-        "Let’s begin thoughtfully. Based on the title alone, what do you think this paper is trying to explore?",
+      text: "Let’s begin thoughtfully. Based on the title alone, what do you think this paper is trying to explore?",
     },
   ]);
 
@@ -30,10 +35,7 @@ export default function SocraticSessionPage() {
   const sendMessage = (text) => {
     if (!text.trim()) return;
 
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now(), role: "user", text },
-    ]);
+    setMessages((prev) => [...prev, { id: Date.now(), role: "user", text }]);
 
     setInput("");
     setThinking(true);
@@ -45,8 +47,7 @@ export default function SocraticSessionPage() {
         {
           id: Date.now() + 1,
           role: "assistant",
-          text:
-            "Good. Now think carefully — which part of the paper supports that idea most clearly?",
+          text: "Good. Now think carefully — which part of the paper supports that idea most clearly?",
         },
       ]);
       setThinking(false);

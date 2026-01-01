@@ -1,9 +1,19 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import { apiFetch } from "../lib/api";
 
 export default function SignInPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const successMessage = location.state?.successMessage || "";
+
+  useEffect(() => {
+    const token = localStorage.getItem("socratia_token");
+    if (token) {
+      navigate("/workspace");
+    }
+  }, [navigate]);
 
   // Backend-ready state (later: send to API)
   const [email, setEmail] = useState("");
@@ -12,25 +22,35 @@ export default function SignInPage() {
   // UI-only for now (later: set based on API response)
   const [error, setError] = useState("");
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
     setError("");
 
-    // No backend/auth logic yet.
-    // Later: call your API here and on success navigate("/papers")
-    // For now: just basic empty check (optional)
     if (!email || !password) {
-      setError("Please enter email and password.");
+      setError("Please fill in all fields.");
       return;
     }
 
-    navigate("/workspace");
+    try {
+      const data = await apiFetch("/api/auth/signin", {
+        method: "POST",
+        body: { email, password },
+      });
+
+      // Save auth info
+      localStorage.setItem("socratia_token", data.token);
+      localStorage.setItem("socratia_user", JSON.stringify(data.user));
+
+      // Go to workspace after login
+      navigate("/workspace");
+    } catch (err) {
+      setError(err?.message || "Sign in failed.");
+    }
   }
 
   return (
     <div className="min-h-screen bg-[radial-gradient(60%_40%_at_50%_0%,rgba(59,130,246,0.22),transparent_60%),linear-gradient(180deg,#05070f,#03040a)] text-white">
       <Navbar variant="signin" />
-
 
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="mx-auto grid max-w-4xl gap-6 lg:grid-cols-2">
@@ -55,7 +75,10 @@ export default function SignInPage() {
 
             <div className="mt-6 text-sm text-white/70">
               Don’t have an account?{" "}
-              <NavLink to="/signup" className="font-semibold text-blue-300 hover:text-blue-200">
+              <NavLink
+                to="/signup"
+                className="font-semibold text-blue-300 hover:text-blue-200"
+              >
                 Create one
               </NavLink>
             </div>
@@ -65,6 +88,11 @@ export default function SignInPage() {
           <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(59,130,246,0.08)] backdrop-blur sm:p-8">
             <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
             <div className="relative">
+              {successMessage && (
+                <div className="mb-4 rounded-2xl border border-green-500/20 bg-green-500/10 px-4 py-3 text-sm text-green-300">
+                  {successMessage}
+                </div>
+              )}
               <form onSubmit={onSubmit} className="space-y-4">
                 <div>
                   <label className="text-sm font-medium text-white/80">

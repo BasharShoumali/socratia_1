@@ -1,8 +1,15 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 export default function WorkspacePage() {
+  useEffect(() => {
+    const token = localStorage.getItem("socratia_token");
+    if (!token) {
+      window.location.href = "/signin";
+    }
+  }, []);
+
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const activityRef = useRef(null);
@@ -11,10 +18,18 @@ export default function WorkspacePage() {
   const starterFiles = useMemo(
     () => [
       { id: "seed-1", name: "Deep_Learning_Paper.pdf", meta: "PDF • 12 pages" },
-      { id: "seed-2", name: "Transformer_Architecture.pdf", meta: "PDF • 23 pages" },
+      {
+        id: "seed-2",
+        name: "Transformer_Architecture.pdf",
+        meta: "PDF • 23 pages",
+      },
       { id: "seed-3", name: "AI_in_Healthcare.pdf", meta: "PDF • 9 pages" },
       { id: "seed-4", name: "Survey_on_RAG.pdf", meta: "PDF • 31 pages" },
-      { id: "seed-5", name: "Neural_Networks_Notes.pdf", meta: "PDF • 18 pages" },
+      {
+        id: "seed-5",
+        name: "Neural_Networks_Notes.pdf",
+        meta: "PDF • 18 pages",
+      },
     ],
     []
   );
@@ -57,7 +72,11 @@ export default function WorkspacePage() {
     const newItems = picked.map((file, idx) => ({
       id: `local-${now}-${idx}`,
       name: file.name,
-      meta: `${(file.type || "File").toUpperCase()} • ${(file.size / 1024 / 1024).toFixed(2)} MB`,
+      meta: `${(file.type || "File").toUpperCase()} • ${(
+        file.size /
+        1024 /
+        1024
+      ).toFixed(2)} MB`,
       _localFile: file, // keep for later upload API
     }));
 
@@ -220,7 +239,9 @@ export default function WorkspacePage() {
           {/* Papers */}
           <section className="lg:col-span-1">
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-white/90">Your papers</h2>
+              <h2 className="text-sm font-semibold text-white/90">
+                Your papers
+              </h2>
               <div className="text-xs text-blue-200/70">Select up to 2</div>
             </div>
 
@@ -245,7 +266,9 @@ export default function WorkspacePage() {
                         <div className="text-sm font-semibold text-white">
                           {file.name}
                         </div>
-                        <div className="mt-1 text-xs text-white/60">{file.meta}</div>
+                        <div className="mt-1 text-xs text-white/60">
+                          {file.meta}
+                        </div>
                       </div>
 
                       <div
@@ -275,7 +298,9 @@ export default function WorkspacePage() {
           {/* Activity */}
           <aside className="lg:col-span-1" ref={activityRef}>
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-white/90">Recent activity</h2>
+              <h2 className="text-sm font-semibold text-white/90">
+                Recent activity
+              </h2>
               <div className="text-xs text-blue-200/70">Sessions</div>
             </div>
 
@@ -298,7 +323,9 @@ export default function WorkspacePage() {
                       <div className="text-sm font-semibold">
                         {h.type === "compare" ? "Compare" : "Learn"}
                       </div>
-                      <div className="mt-1 text-xs text-white/60">{h.title}</div>
+                      <div className="mt-1 text-xs text-white/60">
+                        {h.title}
+                      </div>
                       <div className="mt-2 text-xs text-white/40">{h.time}</div>
                     </button>
                   ))}
