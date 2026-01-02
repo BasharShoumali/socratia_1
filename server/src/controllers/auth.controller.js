@@ -66,12 +66,15 @@ export async function signup(req, res) {
         role: user.role,
       },
     });
-  } catch (err) {
+    } catch (err) {
+    console.error("🔥 SIGNUP ERROR:", err);
+
     if (err?.code === 11000) {
       return res
         .status(409)
         .json({ ok: false, error: "Email already in use." });
     }
+
     return res.status(500).json({ ok: false, error: "Server error." });
   }
 }

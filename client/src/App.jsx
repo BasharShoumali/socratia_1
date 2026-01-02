@@ -83,7 +83,10 @@ export default function App() {
       <Route path="/session" element={<SocraticSessionPage />} />
       <Route path="/compare" element={<ComparisonSessionPage />} />
 
-      {isAdmin && <Route path="/admin" element={<AdminPage />} />}
+      <Route
+        path="/admin"
+        element={isAdmin ? <AdminPage /> : <WorkspacePage />}
+      />
     </Routes>
   );
 }
