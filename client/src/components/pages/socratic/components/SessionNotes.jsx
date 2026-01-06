@@ -10,7 +10,6 @@ export default function SessionNotes({
   const [notes, setNotes] = useState([]);
   const [saving, setSaving] = useState(false);
 
-  // ✅ عند History mode: حمّل notes الجاهزة
   useEffect(() => {
     if (readOnly) {
       setNotes(initialNotes);
@@ -53,7 +52,6 @@ export default function SessionNotes({
         </p>
       )}
 
-      {/* ✏️ Input (Learn mode فقط) */}
       {!readOnly && (
         <>
           <textarea
@@ -63,10 +61,10 @@ export default function SessionNotes({
             placeholder="Your note…"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault(); // ❌ لا تنزل سطر
-                handleSaveNote(); // ✅ احفظ الملاحظة
+                e.preventDefault(); 
+                handleSaveNote(); 
               }
-              // Shift + Enter → سطر جديد (طبيعي)
+         
             }}
           />
 

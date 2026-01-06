@@ -13,7 +13,7 @@ export default function ActionsBar({
     const f = selectedFiles[0];
 
     console.log("[LEARN] Open session for file:", f.id);
-    const sessionKey = crypto.randomUUID(); // 👈 NEW
+    const sessionKey = crypto.randomUUID(); 
 
     console.log("[LEARN] Open NEW session for file:", f.id, sessionKey);
     navigate("/socratic-session", {

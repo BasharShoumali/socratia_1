@@ -16,11 +16,10 @@ export default function MessageInput({ input, setInput, onSend }) {
           rows={2}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault(); // منع سطر جديد
+              e.preventDefault();
               if (!input.trim()) return;
               onSend(input);
             }
-            // Shift+Enter → سطر جديد (طبيعي)
           }}
           className="flex-1 resize-none rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
         />

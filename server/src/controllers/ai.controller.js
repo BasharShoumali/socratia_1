@@ -92,7 +92,7 @@ export async function chatWithFile(req, res) {
           userId,
           fileId,
           type: "socratic",
-          paperName: fileMeta.originalName, // ✅ الآن آمن
+          paperName: fileMeta.originalName,
         },
         $push: {
           messages: { $each: updates },
@@ -181,7 +181,7 @@ export async function getUserChats(req, res) {
 export async function getChatById(req, res) {
   try {
     const userId = req.userId || req.user?.id || req.user?._id;
-    const chatId = req.params.id; // هذا هو chatId الحقيقي
+    const chatId = req.params.id; 
 
     if (!userId) {
       return res.status(401).json({ ok: false, error: "Unauthorized" });
@@ -191,7 +191,6 @@ export async function getChatById(req, res) {
       return res.status(400).json({ ok: false, error: "Missing chatId" });
     }
 
-    // ✅ البحث الصحيح
     const chat = await Chat.findOne({
       chatId,
       userId,
@@ -204,10 +203,10 @@ export async function getChatById(req, res) {
     return res.json({
       ok: true,
       chat: {
-        chatId: chat.chatId, // 👈 مهم
+        chatId: chat.chatId, 
         fileId: chat.fileId,
         paperName: chat.paperName,
-        type: chat.type, // ✅
+        type: chat.type, 
         messages: chat.messages,
         notes: chat.notes,
         createdAt: chat.createdAt,

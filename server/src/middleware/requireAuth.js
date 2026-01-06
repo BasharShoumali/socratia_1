@@ -11,7 +11,7 @@ export function requireAuth(req, res, next) {
   const payload = jwt.verify(token, process.env.JWT_SECRET);
 
   req.user = payload;
-  req.userId = payload.userId || payload.sub; // ✅ هذا هو المفتاح
+  req.userId = payload.userId || payload.sub; 
 
   next();
 }
