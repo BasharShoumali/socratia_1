@@ -25,7 +25,7 @@ export default function Navbar({ variant = "home" }) {
         <div className="flex items-center">
           <NavLink to="/" className="flex items-center gap-3">
             <img
-              src="../../../public/logo_head.png" // ضع مسار اللوجو هنا
+              src="/public/logo_head.png" // ضع مسار اللوجو هنا
               alt="Socratia Logo"
               className="
                 h-9 w-9
