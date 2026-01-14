@@ -12,9 +12,9 @@ export default function HomePage({ onStart }) {
             </h1>
 
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
-              A fucking calm Socratic workspace that helps you understand
-              academic papers by asking the right questions — step by step,
-              without overwhelming you.
+              A calm Socratic workspace that helps you understand academic
+              papers by asking the right questions — step by step, without
+              overwhelming you.
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
