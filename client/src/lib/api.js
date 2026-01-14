@@ -3,8 +3,8 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 export async function apiFetch(path, options = {}) {
   const token = localStorage.getItem("socratia_token");
 
-  console.log("TOKEN SENT:", token);
-  console.log("AUTH HEADER:", token ? `Bearer ${token}` : "NO TOKEN");
+  // console.log("TOKEN SENT:", token);
+  // console.log("AUTH HEADER:", token ? `Bearer ${token}` : "NO TOKEN");
 
   const res = await fetch(API_BASE + path, {
     method: options.method || "GET",
