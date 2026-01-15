@@ -4,6 +4,8 @@ import authRoutes from "./routes/auth.routes.js";
 import fileRoutes from "./routes/file.routes.js";
 import aiRoutes from "./routes/ai.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
+import userRoutes from "./routes/user.routes.js";
+
 const app = express();
 
 console.log("[APP] Express initializing");
@@ -25,4 +27,7 @@ console.log("[APP] AI routes mounted at /api/ai");
 
 app.use("/api/admin", adminRoutes);
 console.log("[APP] Admin routes mounted at /api/admin");
+
+app.use("/api/user", userRoutes);
+console.log("[APP] User routes mounted at /api/user");
 export default app;

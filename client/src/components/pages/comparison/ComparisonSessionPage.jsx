@@ -52,7 +52,15 @@ export default function ComparisonSessionPage() {
   }, [mode, chatId]);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(70%_45%_at_50%_0%,rgba(59,130,246,0.22),transparent_60%),radial-gradient(45%_30%_at_15%_60%,rgba(168,85,247,0.12),transparent_65%),linear-gradient(180deg,#05070f,#03040a)] text-white">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundColor: "var(--bg-main)",
+        color: "var(--text-main)",
+        backgroundImage:
+          "radial-gradient(70% 45% at 50% 0%, rgba(59, 130, 246, 0.22), transparent 60%), radial-gradient(45% 30% at 15% 60%, rgba(168, 85, 247, 0.12), transparent 65%)",
+      }}
+    >
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <ComparisonHeader
           paperA={paperNames[0]}

@@ -1,8 +1,22 @@
 export default function HomePage({ onStart }) {
   return (
-    <div className="min-h-screen bg-[radial-gradient(60%_40%_at_50%_0%,rgba(59,130,246,0.25),transparent_60%),linear-gradient(180deg,#05070f,#03040a)] text-white">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundColor: "var(--bg-main)",
+        color: "var(--text-main)",
+        backgroundImage:
+          "radial-gradient(60% 40% at 50% 0%, rgba(59, 130, 246, 0.25), transparent 60%)",
+      }}
+    >
       <main className="mx-auto max-w-6xl px-4 pb-20 pt-10 sm:px-6 sm:pt-14">
-        <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(59,130,246,0.08)] backdrop-blur sm:p-10">
+        <section
+          className="relative overflow-hidden rounded-3xl border p-6 shadow-lg backdrop-blur sm:p-10"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            borderColor: "var(--border-main)",
+          }}
+        >
           <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
           <div className="absolute -bottom-28 -left-24 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
 
@@ -11,7 +25,10 @@ export default function HomePage({ onStart }) {
               Let an AI tutor guide you through research papers
             </h1>
 
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
+            <p
+              className="mt-4 max-w-2xl text-sm leading-relaxed sm:text-base"
+              style={{ color: "var(--text-muted)" }}
+            >
               A calm Socratic workspace that helps you understand academic
               papers by asking the right questions — step by step, without
               overwhelming you.
@@ -49,10 +66,17 @@ export default function HomePage({ onStart }) {
           ].map((c) => (
             <div
               key={c.title}
-              className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-[0_0_30px_rgba(59,130,246,0.06)] backdrop-blur"
+              className="rounded-3xl border p-5 shadow-lg backdrop-blur"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                borderColor: "var(--border-main)",
+              }}
             >
               <div className="text-base font-semibold">{c.title}</div>
-              <div className="mt-2 text-sm leading-relaxed text-white/70">
+              <div
+                className="mt-2 text-sm leading-relaxed"
+                style={{ color: "var(--text-muted)" }}
+              >
                 {c.desc}
               </div>
             </div>
@@ -61,10 +85,17 @@ export default function HomePage({ onStart }) {
 
         <section
           id="about"
-          className="mt-10 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8"
+          className="mt-10 rounded-3xl border p-6 backdrop-blur sm:p-8"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            borderColor: "var(--border-main)",
+          }}
         >
           <h2 className="text-lg font-semibold">About</h2>
-          <p className="mt-2 text-sm leading-relaxed text-white/70">
+          <p
+            className="mt-2 text-sm leading-relaxed"
+            style={{ color: "var(--text-muted)" }}
+          >
             Socratia is a Socratic learning app for reading and comparing
             academic papers. You’ll upload papers, choose a learning mode
             (single paper or comparison), and the assistant will guide you with
@@ -74,14 +105,17 @@ export default function HomePage({ onStart }) {
           <div className="mt-5 flex">
             <button
               onClick={onStart}
-              className="rounded-2xl bg-blue-500 px-5 py-2.5 text-sm font-semibold shadow-[0_0_30px_rgba(59,130,246,0.35)] hover:bg-blue-400 transition"
+              className="rounded-2xl bg-blue-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_30px_rgba(59,130,246,0.35)] hover:bg-blue-400 transition"
             >
               Sign in to start
             </button>
           </div>
         </section>
 
-        <footer className="mt-10 text-center text-xs text-white/40">
+        <footer
+          className="mt-10 text-center text-xs"
+          style={{ color: "var(--text-muted)" }}
+        >
           Socratia — AI-powered research assistant. All rights reserved © 2026.
         </footer>
       </main>

@@ -24,9 +24,10 @@ export default function WorkspaceHeader({ fileInputRef, setFiles }) {
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
             Workspace
           </h1>
-          <p className="mt-1 text-sm text-white/70">
-            Select <span className="text-white">one</span> paper to learn or{" "}
-            <span className="text-white">two</span> papers to compare.
+          <p className="mt-1 text-sm" style={{ color: "var(--text-muted)" }}>
+            Select <span style={{ color: "var(--text-main)" }}>one</span> paper
+            to learn or <span style={{ color: "var(--text-main)" }}>two</span>{" "}
+            papers to compare.
           </p>
         </div>
 

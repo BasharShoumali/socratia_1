@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import UserMenu from "./UserMenu";
 import HelperText from "./HelperText";
+import useTheme from "../../hooks/useTheme";
 
 function getStoredUser() {
   try {
@@ -14,62 +15,86 @@ function getStoredUser() {
 export default function Navbar({ variant = "home" }) {
   const user = getStoredUser();
   const displayName = user?.username || user?.fullName || user?.email || "User";
+  const { theme, toggleTheme } = useTheme();
 
   const showHomeBtn =
     variant === "signin" || variant === "signup" || variant === "app";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/30 backdrop-blur">
+    <header
+      className="sticky top-0 z-50 border-b backdrop-blur"
+      style={{
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border-main)",
+      }}
+    >
       <div className="mx-auto grid max-w-6xl grid-cols-3 items-center px-4 py-3 sm:px-6">
         {/* Left: Logo */}
         <div className="flex items-center">
           <NavLink to="/" className="flex items-center gap-3">
             <img
-              src={`${import.meta.env.BASE_URL}logo_head.png`} // ضع مسار اللوجو هنا
+              src={`${import.meta.env.BASE_URL}logo_head.png`}
               alt="Socratia Logo"
-              className="
-                h-9 w-9
-                rounded-2xl
-                object-cover
-                ring-1 ring-blue-400/30
-                shadow-[0_0_25px_rgba(59,130,246,0.25)]
-              "
+              className="h-9 w-9 rounded-2xl object-cover ring-1 ring-blue-400/30
+                         shadow-[0_0_25px_rgba(59,130,246,0.25)]"
             />
-            <div className="text-sm font-semibold tracking-wide text-white">
-              SOCRATIA
-            </div>
+            <div className="text-sm font-semibold tracking-wide">SOCRATIA</div>
           </NavLink>
         </div>
 
         {/* Middle: Welcome (app only) */}
         <div className="flex justify-center">
           {variant === "app" && (
-            <div className="hidden sm:flex items-center gap-2 rounded-2xl border border-blue-400/15 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-blue-100 shadow-[0_0_24px_rgba(59,130,246,0.15)]">
-              <span className="text-white/70">Welcome,</span>
-              <span className="text-white">{displayName}</span>
+            <div
+              className="hidden sm:flex items-center gap-2 rounded-2xl border
+                         px-4 py-2 text-sm font-semibold shadow"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                borderColor: "var(--border-main)",
+              }}
+            >
+              <span className="text-[var(--text-muted)]">Welcome,</span>
+              <span>{displayName}</span>
             </div>
           )}
         </div>
 
         {/* Right side */}
-        <div className="flex items-center justify-end gap-4 text-sm">
+        <div className="flex items-center justify-end gap-3 text-sm">
           {showHomeBtn && (
             <NavLink
               to="/"
-              className="rounded-xl border border-white/15 bg-white/5 px-4 py-2 font-semibold text-white hover:bg-white/10 transition"
+              className="rounded-xl border px-4 py-2 font-semibold transition"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                borderColor: "var(--border-main)",
+              }}
             >
               Home
             </NavLink>
           )}
 
+          {/* 🌙 / ☀️ Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="rounded-xl border px-3 py-2 transition hover:scale-105"
+            style={{
+              backgroundColor: "var(--bg-card)",
+              borderColor: "var(--border-main)",
+            }}
+            title="Toggle theme"
+          >
+            {theme === "dark" ? "🌙" : "☀️"}
+          </button>
+
           {/* Home: helper text inline + Sign In */}
           {variant === "home" && (
             <div className="flex items-center gap-3">
-              <span className="hidden sm:inline text-sm text-white/70">
+              <span className="hidden sm:inline text-sm text-[var(--text-muted)]">
                 Don’t have an account?{" "}
                 <NavLink
                   to="/signup"
-                  className="font-semibold text-blue-300 hover:text-blue-200"
+                  className="font-semibold text-blue-400 hover:text-blue-300"
                 >
                   Sign up
                 </NavLink>
@@ -77,7 +102,9 @@ export default function Navbar({ variant = "home" }) {
 
               <NavLink
                 to="/signin"
-                className="rounded-xl bg-blue-500 px-4 py-2 font-semibold text-white shadow-[0_0_30px_rgba(59,130,246,0.35)] hover:bg-blue-400 transition"
+                className="rounded-xl bg-blue-500 px-4 py-2 font-semibold text-white dark:text-white
+                           shadow-[0_0_30px_rgba(59,130,246,0.35)]
+                           hover:bg-blue-400 transition"
               >
                 Sign In
               </NavLink>

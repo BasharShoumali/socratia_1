@@ -68,9 +68,15 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <section className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(59,130,246,0.08)] backdrop-blur">
+    <section
+      className="rounded-3xl border p-6 shadow-lg backdrop-blur"
+      style={{
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border-main)",
+      }}
+    >
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="text-sm text-white/70">
+        <div className="text-sm" style={{ color: "var(--text-muted)" }}>
           Manage users (delete, reset password, change role).
         </div>
 
@@ -78,23 +84,40 @@ export default function AdminUsersPage() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name/email/role..."
-          className="w-full sm:w-80 rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none ring-blue-500/40 focus:ring-2"
+          className="w-full sm:w-80 rounded-2xl border px-4 py-3 text-sm placeholder:opacity-50 outline-none ring-blue-500/40 focus:ring-2"
+          style={{
+            backgroundColor: "var(--bg-main)",
+            borderColor: "var(--border-main)",
+            color: "var(--text-main)",
+          }}
         />
       </div>
 
       {error && (
-        <div className="mb-4 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+        <div
+          className="mb-4 rounded-2xl border px-4 py-3 text-sm"
+          style={{
+            borderColor: "rgba(239, 68, 68, 0.2)",
+            backgroundColor: "rgba(239, 68, 68, 0.1)",
+            color: "rgb(239, 68, 68)",
+          }}
+        >
           {error}
         </div>
       )}
 
       {loading ? (
-        <div className="text-white/70">Loading users...</div>
+        <div style={{ color: "var(--text-muted)" }}>Loading users...</div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="text-white/70">
-              <tr className="border-b border-white/10">
+            <thead style={{ color: "var(--text-muted)" }}>
+              <tr
+                style={{
+                  borderColor: "var(--border-main)",
+                  borderBottomWidth: "1px",
+                }}
+              >
                 <th className="py-3 pr-3">Username</th>
                 <th className="py-3 pr-3">Email</th>
                 <th className="py-3 pr-3">Role</th>
@@ -104,11 +127,21 @@ export default function AdminUsersPage() {
             </thead>
             <tbody>
               {filtered.map((u) => (
-                <tr key={u.id} className="border-b border-white/5">
+                <tr
+                  key={u.id}
+                  style={{
+                    borderColor: "var(--border-main)",
+                    borderBottomWidth: "1px",
+                    color: "var(--text-main)",
+                  }}
+                >
                   <td className="py-3 pr-3">{u.username || "—"}</td>
                   <td className="py-3 pr-3">{u.email}</td>
                   <td className="py-3 pr-3">{u.role}</td>
-                  <td className="py-3 pr-3 text-white/70">
+                  <td
+                    className="py-3 pr-3"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     {new Date(u.createdAt).toLocaleString()}
                   </td>
                   <td className="py-3 pr-3">
@@ -116,15 +149,12 @@ export default function AdminUsersPage() {
                       {/* Reset password */}
                       <button
                         onClick={() => onResetPassword(u.id, u.email)}
-                        className="
-                          rounded-xl
-                         bg-amber-500/15
-                          px-3 py-1.5
-                          text-xs font-semibold text-amber-300
-                          border border-amber-400/30
-                        hover:bg-amber-500/25
-                          transition
-                        "
+                        className="rounded-xl px-3 py-1.5 text-xs font-semibold border transition"
+                        style={{
+                          backgroundColor: "rgba(217, 119, 6, 0.1)",
+                          borderColor: "rgba(217, 119, 6, 0.3)",
+                          color: "rgb(217, 119, 6)",
+                        }}
                       >
                         Reset
                       </button>
@@ -132,15 +162,12 @@ export default function AdminUsersPage() {
                       {/* Toggle role */}
                       <button
                         onClick={() => onChangeRole(u.id, u.email, u.role)}
-                        className="
-                          rounded-xl
-                        bg-blue-500/15
-                          px-3 py-1.5
-                          text-xs font-semibold text-blue-300
-                          border border-blue-400/30
-                        hover:bg-blue-500/25
-                          transition
-                        "
+                        className="rounded-xl px-3 py-1.5 text-xs font-semibold border transition"
+                        style={{
+                          backgroundColor: "rgba(59, 130, 246, 0.1)",
+                          borderColor: "rgba(59, 130, 246, 0.3)",
+                          color: "rgb(96, 165, 250)",
+                        }}
                       >
                         {u.role === "admin" ? "Demote" : "Promote"}
                       </button>
@@ -148,15 +175,12 @@ export default function AdminUsersPage() {
                       {/* Delete */}
                       <button
                         onClick={() => onDelete(u.id, u.email)}
-                        className="
-                          rounded-xl
-                        bg-red-500/15
-                          px-3 py-1.5
-                          text-xs font-semibold text-red-300
-                          border border-red-400/30
-                        hover:bg-red-500/30
-                          transition
-                        "
+                        className="rounded-xl px-3 py-1.5 text-xs font-semibold border transition"
+                        style={{
+                          backgroundColor: "rgba(239, 68, 68, 0.1)",
+                          borderColor: "rgba(239, 68, 68, 0.3)",
+                          color: "rgb(239, 68, 68)",
+                        }}
                       >
                         Delete
                       </button>
@@ -167,7 +191,11 @@ export default function AdminUsersPage() {
 
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="py-6 text-white/60">
+                  <td
+                    colSpan="5"
+                    className="py-6"
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     No users found.
                   </td>
                 </tr>

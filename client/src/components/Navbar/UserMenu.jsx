@@ -31,22 +31,50 @@ export default function UserMenu({ user }) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-2 font-semibold text-white hover:bg-white/10 transition"
+        className="flex items-center gap-2 rounded-xl border px-3 py-2 font-semibold transition"
+        style={{
+          backgroundColor: "var(--bg-card)",
+          borderColor: "var(--border-main)",
+        }}
       >
         <span className="text-base">👤</span>
         <span className="hidden sm:inline text-sm">{displayName}</span>
-        <span className="text-xs text-white/60">▼</span>
+        <span className="text-xs text-[var(--text-muted)]">▼</span>
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f1a] shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
+        <div
+          className="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border shadow-lg"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            borderColor: "var(--border-main)",
+          }}
+        >
+          {user && (
+            <button
+              onClick={() => {
+                setOpen(false);
+                navigate("/user/profile");
+              }}
+              className="w-full px-4 py-3 text-left text-sm transition"
+              style={{
+                color: "var(--text-main)",
+              }}
+              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+              onMouseLeave={(e) => (e.target.style.opacity = "1")}
+            >
+              User Panel
+            </button>
+          )}
           {user?.role === "admin" && (
             <button
               onClick={() => {
                 setOpen(false);
                 navigate("/admin/users");
               }}
-              className="w-full px-4 py-3 text-left text-sm text-blue-300 hover:bg-blue-500/10 transition"
+              className="w-full px-4 py-3 text-left text-sm text-blue-400 transition"
+              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+              onMouseLeave={(e) => (e.target.style.opacity = "1")}
             >
               Admin Panel
             </button>
@@ -56,7 +84,12 @@ export default function UserMenu({ user }) {
             onClick={() => {
               if (window.confirm("Sign out and go to Sign In?")) logout();
             }}
-            className="w-full px-4 py-3 text-left text-sm text-white/90 hover:bg-white/10 transition"
+            className="w-full px-4 py-3 text-left text-sm transition"
+            style={{
+              color: "var(--text-main)",
+            }}
+            onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+            onMouseLeave={(e) => (e.target.style.opacity = "1")}
           >
             Switch account
           </button>
@@ -66,7 +99,9 @@ export default function UserMenu({ user }) {
               if (window.confirm("Are you sure you want to sign out?"))
                 logout();
             }}
-            className="w-full px-4 py-3 text-left text-sm text-red-300 hover:bg-red-500/10 transition"
+            className="w-full px-4 py-3 text-left text-sm text-red-400 transition"
+            onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+            onMouseLeave={(e) => (e.target.style.opacity = "1")}
           >
             Sign out
           </button>

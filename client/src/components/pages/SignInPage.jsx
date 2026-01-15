@@ -1,38 +1,97 @@
 import { NavLink } from "react-router-dom";
 import useSignIn from "../../hooks/useSignIn";
+import useTheme from "../../hooks/useTheme";
 
 export default function SignInPage() {
   const { email, password, setEmail, setPassword, submit, error, loading } =
     useSignIn();
+  const { theme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(60%_40%_at_50%_0%,rgba(59,130,246,0.22),transparent_60%),linear-gradient(180deg,#05070f,#03040a)] text-white">
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "var(--bg-main)",
+        backgroundImage:
+          theme === "dark"
+            ? "radial-gradient(60% 40% at 50% 0%, rgba(59, 130, 246, 0.22), transparent 60%), linear-gradient(180deg, #05070f, #03040a)"
+            : "radial-gradient(60% 40% at 50% 0%, rgba(59, 130, 246, 0.15), transparent 60%)",
+        color: "var(--text-main)",
+      }}
+    >
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="mx-auto grid max-w-4xl gap-6 lg:grid-cols-2">
           {/* Left: intro */}
-          <section className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(59,130,246,0.08)] backdrop-blur sm:p-8">
-            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          <section
+            style={{
+              borderRadius: "1.5rem",
+              border: `1px solid var(--border-main)`,
+              backgroundColor:
+                theme === "dark"
+                  ? "rgba(255, 255, 255, 0.05)"
+                  : "rgba(59, 130, 246, 0.08)",
+              padding: "1.5rem",
+              boxShadow:
+                theme === "dark"
+                  ? "0 0 40px rgba(59, 130, 246, 0.08)"
+                  : "0 0 20px rgba(59, 130, 246, 0.05)",
+              backdropFilter: "blur(10px)",
+            }}
+          >
+            <h1
+              className="text-2xl font-bold tracking-tight sm:text-3xl"
+              style={{ color: "var(--text-main)" }}
+            >
               Sign in to Socratia
             </h1>
 
-            <p className="mt-3 text-sm leading-relaxed text-white/70">
+            <p
+              className="mt-3 text-sm leading-relaxed"
+              style={{ color: "var(--text-muted)" }}
+            >
               Continue your Socratic workspace and access your saved papers.
             </p>
 
-            <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
-              <div className="text-sm font-semibold">What you’ll do next</div>
-              <ul className="mt-2 space-y-2 text-sm text-white/70">
+            <div
+              className="mt-6 rounded-2xl p-4"
+              style={{
+                border: `1px solid var(--border-main)`,
+                backgroundColor:
+                  theme === "dark"
+                    ? "rgba(0, 0, 0, 0.2)"
+                    : "rgba(59, 130, 246, 0.1)",
+              }}
+            >
+              <div
+                className="text-sm font-semibold"
+                style={{ color: "var(--text-main)" }}
+              >
+                What you'll do next
+              </div>
+              <ul
+                className="mt-2 space-y-2 text-sm"
+                style={{ color: "var(--text-muted)" }}
+              >
                 <li>• View your uploaded papers</li>
                 <li>• Choose one paper to learn</li>
                 <li>• Or compare two papers</li>
               </ul>
             </div>
 
-            <div className="mt-6 text-sm text-white/70">
-              Don’t have an account?{" "}
+            <div
+              className="mt-6 text-sm"
+              style={{ color: "var(--text-muted)" }}
+            >
+              Don't have an account?{" "}
               <NavLink
                 to="/signup"
-                className="font-semibold text-blue-300 hover:text-blue-200"
+                className="font-semibold hover:opacity-80 transition"
+                style={{
+                  color:
+                    theme === "dark"
+                      ? "rgb(147, 197, 253)"
+                      : "rgb(59, 130, 246)",
+                }}
               >
                 Create one
               </NavLink>
@@ -40,7 +99,24 @@ export default function SignInPage() {
           </section>
 
           {/* Right: form */}
-          <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(59,130,246,0.08)] backdrop-blur sm:p-8">
+          <section
+            style={{
+              borderRadius: "1.5rem",
+              border: `1px solid var(--border-main)`,
+              backgroundColor:
+                theme === "dark"
+                  ? "rgba(255, 255, 255, 0.05)"
+                  : "rgba(59, 130, 246, 0.08)",
+              padding: "1.5rem",
+              boxShadow:
+                theme === "dark"
+                  ? "0 0 40px rgba(59, 130, 246, 0.08)"
+                  : "0 0 20px rgba(59, 130, 246, 0.05)",
+              backdropFilter: "blur(10px)",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -49,7 +125,10 @@ export default function SignInPage() {
               className="space-y-4"
             >
               <div>
-                <label className="text-sm font-medium text-white/80">
+                <label
+                  style={{ color: "var(--text-main)" }}
+                  className="text-sm font-medium"
+                >
                   Email
                 </label>
                 <input
@@ -58,12 +137,20 @@ export default function SignInPage() {
                   type="email"
                   autoComplete="email"
                   placeholder="name@example.com"
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500/40"
+                  style={{
+                    backgroundColor: "var(--bg-main)",
+                    borderColor: "var(--border-main)",
+                    color: "var(--text-main)",
+                  }}
+                  className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500/40"
                 />
               </div>
 
               <div>
-                <label className="text-sm font-medium text-white/80">
+                <label
+                  style={{ color: "var(--text-main)" }}
+                  className="text-sm font-medium"
+                >
                   Password
                 </label>
                 <input
@@ -72,12 +159,40 @@ export default function SignInPage() {
                   type="password"
                   autoComplete="current-password"
                   placeholder="••••••••"
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500/40"
+                  style={{
+                    backgroundColor: "var(--bg-main)",
+                    borderColor: "var(--border-main)",
+                    color: "var(--text-main)",
+                  }}
+                  className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500/40"
                 />
+                <div className="mt-2 text-right">
+                  <NavLink
+                    to="/forget-password"
+                    className="text-xs font-medium hover:opacity-80 transition"
+                    style={{
+                      color:
+                        theme === "dark"
+                          ? "rgb(147, 197, 253)"
+                          : "rgb(59, 130, 246)",
+                    }}
+                  >
+                    Forgot password?
+                  </NavLink>
+                </div>
               </div>
 
               {error && (
-                <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                <div
+                  style={{
+                    borderRadius: "1rem",
+                    border: "1px solid rgba(239, 68, 68, 0.2)",
+                    backgroundColor: "rgba(239, 68, 68, 0.1)",
+                    color: "rgb(254, 91, 91)",
+                    padding: "1rem",
+                  }}
+                  className="text-sm"
+                >
                   {error}
                 </div>
               )}
@@ -85,20 +200,61 @@ export default function SignInPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-2xl bg-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(59,130,246,0.40)] hover:bg-blue-400 disabled:opacity-60 transition"
+                style={{
+                  width: "100%",
+                  backgroundColor:
+                    theme === "dark" ? "rgb(59, 130, 246)" : "rgb(37, 99, 235)",
+                  borderRadius: "0.75rem",
+                  boxShadow:
+                    theme === "dark"
+                      ? "0 0 35px rgba(59, 130, 246, 0.4)"
+                      : "0 0 15px rgba(59, 130, 246, 0.2)",
+                  border: "none",
+                  cursor: loading ? "not-allowed" : "pointer",
+                  opacity: loading ? 0.6 : 1,
+                  transition: "all 0.2s",
+                  color: "white",
+                  padding: "0.75rem 1rem",
+                  fontWeight: "600",
+                }}
+                className="font-semibold text-white"
+                onMouseOver={(e) => {
+                  if (!loading) {
+                    e.target.style.backgroundColor =
+                      theme === "dark"
+                        ? "rgb(37, 99, 235)"
+                        : "rgb(29, 78, 216)";
+                  }
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.backgroundColor =
+                    theme === "dark" ? "rgb(59, 130, 246)" : "rgb(37, 99, 235)";
+                }}
               >
                 {loading ? "Signing in..." : "Sign In"}
               </button>
             </form>
 
             <div className="mt-6 flex items-center justify-between text-sm">
-              <NavLink to="/" className="text-white/70 hover:text-white">
+              <NavLink
+                to="/"
+                style={{ color: "var(--text-muted)" }}
+                className="hover:opacity-80 transition"
+              >
                 ← Back to Home
               </NavLink>
 
               <NavLink
                 to="/signup"
-                className="rounded-xl border border-white/15 bg-white/5 px-4 py-2 font-semibold text-white/90 hover:bg-white/10 transition"
+                style={{
+                  borderRadius: "0.75rem",
+                  border: `1px solid var(--border-main)`,
+                  backgroundColor: "var(--bg-main)",
+                  color: "var(--text-main)",
+                  padding: "0.5rem 1rem",
+                  fontWeight: "600",
+                }}
+                className="hover:opacity-80 transition"
               >
                 Sign Up
               </NavLink>

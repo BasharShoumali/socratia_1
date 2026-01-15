@@ -35,7 +35,11 @@ export default function PapersGrid({
           />
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="rounded-2xl border border-blue-400/25 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500/15"
+            className="rounded-2xl border px-4 py-2 text-sm font-semibold text-white hover:opacity-80 transition"
+            style={{
+              backgroundColor: "rgb(59, 130, 246)",
+              borderColor: "rgba(59, 130, 246, 0.4)",
+            }}
           >
             + Upload
           </button>
@@ -43,8 +47,16 @@ export default function PapersGrid({
       </div>
 
       {files.length === 0 && (
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 text-center">
-          <div className="text-sm text-white/70">No papers uploaded yet</div>
+        <div
+          className="rounded-3xl border p-8 text-center"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            borderColor: "var(--border-main)",
+          }}
+        >
+          <div className="text-sm" style={{ color: "var(--text-muted)" }}>
+            No papers uploaded yet
+          </div>
         </div>
       )}
 

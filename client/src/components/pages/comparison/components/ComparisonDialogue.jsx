@@ -10,12 +10,26 @@ export default function ComparisonDialogue({
   bottomRef,
 }) {
   return (
-    <section className="rounded-3xl border border-white/10 bg-white/5 shadow-[0_0_35px_rgba(59,130,246,0.08)] backdrop-blur">
-      <div className="border-b border-white/10 px-5 py-4">
-        <div className="text-sm font-semibold text-white/90">
+    <section
+      className="rounded-3xl border shadow-lg backdrop-blur"
+      style={{
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border-main)",
+      }}
+    >
+      <div
+        className="border-b px-5 py-4"
+        style={{
+          borderColor: "var(--border-main)",
+        }}
+      >
+        <div
+          className="text-sm font-semibold"
+          style={{ color: "var(--text-main)" }}
+        >
           Socratic Comparison Dialogue
         </div>
-        <div className="text-xs text-white/60">
+        <div className="text-xs" style={{ color: "var(--text-muted)" }}>
           Compare with reasons: claim + evidence from each paper.
         </div>
       </div>
@@ -26,7 +40,14 @@ export default function ComparisonDialogue({
         ))}
 
         {thinking && (
-          <div className="mr-auto max-w-[90%] rounded-3xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/60">
+          <div
+            className="mr-auto max-w-[90%] rounded-3xl border px-4 py-3 text-sm"
+            style={{
+              backgroundColor: "var(--bg-main)",
+              borderColor: "var(--border-main)",
+              color: "var(--text-muted)",
+            }}
+          >
             Socrates is thinking…
           </div>
         )}
@@ -34,7 +55,12 @@ export default function ComparisonDialogue({
         <div ref={bottomRef} />
       </div>
 
-      <div className="border-t border-white/10 px-5 py-4">
+      <div
+        className="border-t px-5 py-4"
+        style={{
+          borderColor: "var(--border-main)",
+        }}
+      >
         <MessageInput input={input} setInput={setInput} onSend={onSend} />
       </div>
     </section>

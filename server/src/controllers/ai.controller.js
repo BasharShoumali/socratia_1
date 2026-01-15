@@ -59,7 +59,7 @@ export async function chatWithFile(req, res) {
       fileBuffer: buffer,
       mimeType: fileMeta.mimeType,
       chatHistory: messages,
-      mode: mode // 👈 Passing the mode here
+      mode: mode, // 👈 Passing the mode here
     });
 
     if (!reply) {
@@ -95,8 +95,8 @@ export async function chatWithFile(req, res) {
           userId,
           fileId,
           // 2. Save the mode type to DB
-          type: mode, 
-          paperName: fileMeta.originalName, 
+          type: mode,
+          paperName: fileMeta.originalName,
         },
         $push: {
           messages: { $each: updates },

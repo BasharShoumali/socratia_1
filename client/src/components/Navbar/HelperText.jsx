@@ -20,7 +20,7 @@ export default function HelperText({ variant }) {
   return (
     <>
       {/* Desktop */}
-      <div className="hidden text-white/70 sm:block">
+      <div className="hidden text-[var(--text-muted)] sm:block">
         {helper.text}
         <NavLink
           to={helper.to}
@@ -31,7 +31,14 @@ export default function HelperText({ variant }) {
       </div>
 
       {/* Mobile */}
-      <div className="border-t border-white/10 bg-black/20 px-4 py-2 text-xs text-white/70 sm:hidden">
+      <div
+        className="border-t px-4 py-2 text-xs sm:hidden"
+        style={{
+          backgroundColor: "var(--bg-card)",
+          borderColor: "var(--border-main)",
+          color: "var(--text-muted)",
+        }}
+      >
         {helper.text}
         <NavLink to={helper.to} className="font-semibold text-blue-300">
           {helper.linkText}

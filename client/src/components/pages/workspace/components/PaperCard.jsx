@@ -9,12 +9,15 @@ export default function PaperCard({
 
   return (
     <div
-      className={`relative rounded-3xl border p-5 backdrop-blur transition
-        ${
-          isSelected
-            ? "border-blue-400/60 bg-blue-500/10"
-            : "border-white/10 bg-white/5"
-        }`}
+      className={`relative rounded-3xl border p-5 backdrop-blur transition`}
+      style={{
+        backgroundColor: isSelected
+          ? "rgba(59, 130, 246, 0.1)"
+          : "var(--bg-card)",
+        borderColor: isSelected
+          ? "rgba(59, 130, 246, 0.6)"
+          : "var(--border-main)",
+      }}
     >
       {/* Selected indicator */}
       {isSelected && (
@@ -24,8 +27,15 @@ export default function PaperCard({
       )}
 
       <button onClick={onToggle} className="w-full text-left">
-        <div className="text-sm font-semibold text-white">{file.name}</div>
-        <div className="mt-1 text-xs text-white/60">{file.meta}</div>
+        <div
+          className="text-sm font-semibold"
+          style={{ color: "var(--text-main)" }}
+        >
+          {file.name}
+        </div>
+        <div className="mt-1 text-xs" style={{ color: "var(--text-muted)" }}>
+          {file.meta}
+        </div>
       </button>
 
       {/* Actions */}
@@ -34,7 +44,11 @@ export default function PaperCard({
           <button
             type="button"
             onClick={onSave}
-            className="pointer-events-auto rounded-xl bg-emerald-500/20 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/30 transition"
+            className="pointer-events-auto rounded-xl px-3 py-1.5 text-xs font-semibold text-emerald-400 hover:opacity-80 transition"
+            style={{
+              backgroundColor: "rgba(16, 185, 129, 0.1)",
+              border: "1px solid rgba(16, 185, 129, 0.3)",
+            }}
           >
             Save
           </button>
@@ -42,7 +56,11 @@ export default function PaperCard({
 
         <button
           onClick={onDelete}
-          className="flex-1 rounded-xl border border-red-400/40 bg-red-500/10 px-3 py-1.5 text-xs text-red-200"
+          className="flex-1 rounded-xl px-3 py-1.5 text-xs text-red-400"
+          style={{
+            backgroundColor: "rgba(239, 68, 68, 0.1)",
+            border: "1px solid rgba(239, 68, 68, 0.3)",
+          }}
         >
           Delete
         </button>

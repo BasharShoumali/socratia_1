@@ -111,7 +111,13 @@ export default function WorkspacePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-[#05070f] text-white">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundColor: "var(--bg-main)",
+        color: "var(--text-main)",
+      }}
+    >
       <main className="mx-auto max-w-6xl px-4 py-10">
         <WorkspaceHeader />
 
@@ -127,22 +133,39 @@ export default function WorkspacePage() {
 
         {confirmFile && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-            <div className="w-80 rounded-2xl bg-[#0b1020] p-6">
-              <h3 className="text-sm font-semibold text-white">Delete file?</h3>
-              <p className="mt-2 text-xs text-white/70">
+            <div
+              className="w-80 rounded-2xl p-6"
+              style={{
+                backgroundColor: "var(--bg-card)",
+              }}
+            >
+              <h3 className="text-sm font-semibold">Delete file?</h3>
+              <p
+                className="mt-2 text-xs"
+                style={{ color: "var(--text-muted)" }}
+              >
                 This action cannot be undone.
               </p>
 
               <div className="mt-4 flex gap-2">
                 <button
                   onClick={() => setConfirmFile(null)}
-                  className="flex-1 rounded-xl bg-white/10 py-2 text-xs"
+                  className="flex-1 rounded-xl py-2 text-xs transition"
+                  style={{
+                    backgroundColor: "var(--bg-main)",
+                    borderColor: "var(--border-main)",
+                    border: "1px solid",
+                  }}
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
-                  className="flex-1 rounded-xl bg-red-500/20 py-2 text-xs text-red-300"
+                  className="flex-1 rounded-xl py-2 text-xs text-red-400 transition"
+                  style={{
+                    backgroundColor: "rgba(239, 68, 68, 0.1)",
+                    border: "1px solid rgba(239, 68, 68, 0.3)",
+                  }}
                 >
                   Delete
                 </button>
@@ -162,7 +185,13 @@ export default function WorkspacePage() {
           />
 
           <div className="relative hidden lg:block h-full">
-            <div className="mx-3 h-full w-px bg-gradient-to-b from-transparent via-blue-400/35 to-transparent" />
+            <div
+              className="mx-3 h-full w-px"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.35), transparent)",
+              }}
+            />
           </div>
 
           <ActivityPanel

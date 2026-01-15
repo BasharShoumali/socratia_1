@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useRegister } from "../../../hooks/useRegister";
+import useTheme from "../../../hooks/useTheme";
 
 export default function SignUpForm({ onSuccess }) {
   const { register, loading, error } = useRegister();
+  const { theme } = useTheme();
 
   const [form, setForm] = useState({
     username: "",
@@ -33,34 +35,91 @@ export default function SignUpForm({ onSuccess }) {
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(60%_40%_at_50%_0%,rgba(59,130,246,0.22),transparent_60%),linear-gradient(180deg,#05070f,#03040a)] text-white">
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "var(--bg-main)",
+        backgroundImage:
+          theme === "dark"
+            ? "radial-gradient(60% 40% at 50% 0%, rgba(59, 130, 246, 0.22), transparent 60%), linear-gradient(180deg, #05070f, #03040a)"
+            : "radial-gradient(60% 40% at 50% 0%, rgba(59, 130, 246, 0.15), transparent 60%)",
+        color: "var(--text-main)",
+      }}
+    >
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="mx-auto grid max-w-4xl gap-6 lg:grid-cols-2">
           {/* Left: intro */}
-          <section className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(59,130,246,0.08)] backdrop-blur sm:p-8">
-            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          <section
+            style={{
+              borderRadius: "1.5rem",
+              border: `1px solid var(--border-main)`,
+              backgroundColor:
+                theme === "dark"
+                  ? "rgba(255, 255, 255, 0.05)"
+                  : "rgba(59, 130, 246, 0.08)",
+              padding: "1.5rem",
+              boxShadow:
+                theme === "dark"
+                  ? "0 0 40px rgba(59, 130, 246, 0.08)"
+                  : "0 0 20px rgba(59, 130, 246, 0.05)",
+              backdropFilter: "blur(10px)",
+            }}
+          >
+            <h1
+              className="text-2xl font-bold tracking-tight sm:text-3xl"
+              style={{ color: "var(--text-main)" }}
+            >
               Create your account
             </h1>
 
-            <p className="mt-3 text-sm leading-relaxed text-white/70">
+            <p
+              className="mt-3 text-sm leading-relaxed"
+              style={{ color: "var(--text-muted)" }}
+            >
               Sign up to save your papers, track your learning sessions, and
               continue anytime.
             </p>
 
-            <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
-              <div className="text-sm font-semibold">What you’ll get</div>
-              <ul className="mt-2 space-y-2 text-sm text-white/70">
+            <div
+              className="mt-6 rounded-2xl p-4"
+              style={{
+                border: `1px solid var(--border-main)`,
+                backgroundColor:
+                  theme === "dark"
+                    ? "rgba(0, 0, 0, 0.2)"
+                    : "rgba(59, 130, 246, 0.1)",
+              }}
+            >
+              <div
+                className="text-sm font-semibold"
+                style={{ color: "var(--text-main)" }}
+              >
+                What you'll get
+              </div>
+              <ul
+                className="mt-2 space-y-2 text-sm"
+                style={{ color: "var(--text-muted)" }}
+              >
                 <li>• Your personal paper library</li>
                 <li>• Socratic learning sessions</li>
                 <li>• Paper comparison sessions</li>
               </ul>
             </div>
 
-            <div className="mt-6 text-sm text-white/70">
+            <div
+              className="mt-6 text-sm"
+              style={{ color: "var(--text-muted)" }}
+            >
               Already have an account?{" "}
               <NavLink
                 to="/signin"
-                className="font-semibold text-blue-300 hover:text-blue-200"
+                className="font-semibold hover:opacity-80 transition"
+                style={{
+                  color:
+                    theme === "dark"
+                      ? "rgb(147, 197, 253)"
+                      : "rgb(59, 130, 246)",
+                }}
               >
                 Sign in
               </NavLink>
@@ -68,7 +127,24 @@ export default function SignUpForm({ onSuccess }) {
           </section>
 
           {/* Right: form */}
-          <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(59,130,246,0.08)] backdrop-blur sm:p-8">
+          <section
+            style={{
+              borderRadius: "1.5rem",
+              border: `1px solid var(--border-main)`,
+              backgroundColor:
+                theme === "dark"
+                  ? "rgba(255, 255, 255, 0.05)"
+                  : "rgba(59, 130, 246, 0.08)",
+              padding: "1.5rem",
+              boxShadow:
+                theme === "dark"
+                  ? "0 0 40px rgba(59, 130, 246, 0.08)"
+                  : "0 0 20px rgba(59, 130, 246, 0.05)",
+              backdropFilter: "blur(10px)",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
             <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
 
             <div className="relative">
@@ -80,7 +156,10 @@ export default function SignUpForm({ onSuccess }) {
                   ["Email", "email", "email"],
                 ].map(([label, name, type]) => (
                   <div key={name}>
-                    <label className="text-sm font-medium text-white/80">
+                    <label
+                      className="text-sm font-medium"
+                      style={{ color: "var(--text-main)" }}
+                    >
                       {label}
                     </label>
                     <input
@@ -88,13 +167,21 @@ export default function SignUpForm({ onSuccess }) {
                       name={name}
                       value={form[name]}
                       onChange={handleChange}
-                      className="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none ring-blue-500/40 focus:ring-2"
+                      style={{
+                        backgroundColor: "var(--bg-main)",
+                        borderColor: "var(--border-main)",
+                        color: "var(--text-main)",
+                      }}
+                      className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500/40"
                     />
                   </div>
                 ))}
 
                 <div>
-                  <label className="text-sm font-medium text-white/80">
+                  <label
+                    className="text-sm font-medium"
+                    style={{ color: "var(--text-main)" }}
+                  >
                     Date of birth
                   </label>
                   <input
@@ -102,7 +189,12 @@ export default function SignUpForm({ onSuccess }) {
                     name="dateOfBirth"
                     value={form.dateOfBirth}
                     onChange={handleChange}
-                    className="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-blue-500/40 focus:ring-2"
+                    style={{
+                      backgroundColor: "var(--bg-main)",
+                      borderColor: "var(--border-main)",
+                      color: "var(--text-main)",
+                    }}
+                    className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500/40"
                   />
                 </div>
 
@@ -111,7 +203,10 @@ export default function SignUpForm({ onSuccess }) {
                   ["Confirm password", "confirmPassword"],
                 ].map(([label, name]) => (
                   <div key={name}>
-                    <label className="text-sm font-medium text-white/80">
+                    <label
+                      className="text-sm font-medium"
+                      style={{ color: "var(--text-main)" }}
+                    >
                       {label}
                     </label>
                     <input
@@ -119,13 +214,27 @@ export default function SignUpForm({ onSuccess }) {
                       name={name}
                       value={form[name]}
                       onChange={handleChange}
-                      className="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none ring-blue-500/40 focus:ring-2"
+                      style={{
+                        backgroundColor: "var(--bg-main)",
+                        borderColor: "var(--border-main)",
+                        color: "var(--text-main)",
+                      }}
+                      className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500/40"
                     />
                   </div>
                 ))}
 
                 {error && (
-                  <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                  <div
+                    style={{
+                      borderRadius: "1rem",
+                      border: "1px solid rgba(239, 68, 68, 0.2)",
+                      backgroundColor: "rgba(239, 68, 68, 0.1)",
+                      color: "rgb(254, 91, 91)",
+                      padding: "1rem",
+                    }}
+                    className="text-sm"
+                  >
                     {error}
                   </div>
                 )}
@@ -133,12 +242,55 @@ export default function SignUpForm({ onSuccess }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(59,130,246,0.40)] hover:bg-blue-400 transition disabled:opacity-50"
+                  style={{
+                    width: "100%",
+                    marginTop: "0.5rem",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "1rem",
+                    backgroundColor:
+                      theme === "dark"
+                        ? "rgb(59, 130, 246)"
+                        : "rgb(37, 99, 235)",
+                    paddingLeft: "1.5rem",
+                    paddingRight: "1.5rem",
+                    paddingTop: "0.75rem",
+                    paddingBottom: "0.75rem",
+                    fontSize: "0.875rem",
+                    fontWeight: "600",
+                    color: "white",
+                    boxShadow:
+                      theme === "dark"
+                        ? "0 0 35px rgba(59, 130, 246, 0.4)"
+                        : "0 0 15px rgba(59, 130, 246, 0.2)",
+                    border: "none",
+                    cursor: loading ? "not-allowed" : "pointer",
+                    opacity: loading ? 0.5 : 1,
+                    transition: "all 0.2s",
+                  }}
+                  onMouseOver={(e) => {
+                    if (!loading) {
+                      e.target.style.backgroundColor =
+                        theme === "dark"
+                          ? "rgb(37, 99, 235)"
+                          : "rgb(29, 78, 216)";
+                    }
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.backgroundColor =
+                      theme === "dark"
+                        ? "rgb(59, 130, 246)"
+                        : "rgb(37, 99, 235)";
+                  }}
                 >
                   {loading ? "Creating..." : "Create Account"}
                 </button>
 
-                <div className="text-center text-xs text-white/50">
+                <div
+                  className="text-center text-xs"
+                  style={{ color: "var(--text-muted)" }}
+                >
                   By creating an account, you agree to our terms.
                 </div>
               </form>
@@ -146,7 +298,8 @@ export default function SignUpForm({ onSuccess }) {
               <div className="mt-6 flex items-center justify-between text-sm">
                 <NavLink
                   to="/signin"
-                  className="text-white/70 hover:text-white"
+                  style={{ color: "var(--text-muted)" }}
+                  className="hover:opacity-80 transition"
                 >
                   ← Back to Sign In
                 </NavLink>

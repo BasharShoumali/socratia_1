@@ -50,22 +50,35 @@ export default function ActionsBar({
   };
 
   return (
-    <div className="mt-6 rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+    <div
+      className="mt-6 rounded-3xl border p-4 backdrop-blur"
+      style={{
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border-main)",
+      }}
+    >
       <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
-        <div className="text-sm text-white/70">
+        <div className="text-sm" style={{ color: "var(--text-muted)" }}>
           Selected:{" "}
-          <span className="font-semibold text-blue-200">{selectedCount}/2</span>
+          <span className="font-semibold text-blue-400">{selectedCount}/2</span>
         </div>
 
         <div className="flex gap-3 flex-wrap">
           <button
             onClick={onLearn}
             disabled={selectedCount !== 1}
-            className={`rounded-2xl px-5 py-2.5 text-sm font-semibold ${
+            className={`rounded-2xl px-5 py-2.5 text-sm font-semibold transition ${
               selectedCount === 1
                 ? "bg-blue-500 text-white"
-                : "bg-white/10 text-white/40 cursor-not-allowed"
+                : "cursor-not-allowed opacity-50"
             }`}
+            style={{
+              backgroundColor:
+                selectedCount === 1 ? "rgb(59, 130, 246)" : "var(--bg-main)",
+              color: selectedCount === 1 ? "white" : "var(--text-muted)",
+              border:
+                selectedCount !== 1 ? "1px solid var(--border-main)" : "none",
+            }}
           >
             Learn
           </button>
@@ -73,11 +86,22 @@ export default function ActionsBar({
           <button
             onClick={onCompare}
             disabled={selectedCount !== 2}
-            className={`rounded-2xl px-5 py-2.5 text-sm font-semibold ${
-              selectedCount === 2
-                ? "bg-blue-500/25 text-blue-100"
-                : "bg-white/10 text-white/40 cursor-not-allowed"
-            }`}
+            className={`rounded-2xl px-5 py-2.5 text-sm font-semibold transition`}
+            style={{
+              backgroundColor:
+                selectedCount === 2
+                  ? "rgba(59, 130, 246, 0.25)"
+                  : "var(--bg-main)",
+              color:
+                selectedCount === 2 ? "rgb(59, 130, 246)" : "var(--text-muted)",
+              border: "1px solid",
+              borderColor:
+                selectedCount === 2
+                  ? "rgba(59, 130, 246, 0.5)"
+                  : "var(--border-main)",
+              cursor: selectedCount !== 2 ? "not-allowed" : "pointer",
+              opacity: selectedCount !== 2 ? 0.5 : 1,
+            }}
           >
             Compare
           </button>

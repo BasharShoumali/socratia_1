@@ -64,7 +64,7 @@ PRIMARY GOAL:
 STYLE:
 - Use Markdown headers and bullet points.
 - Focus on the main hypothesis, methodology, and results.
-`
+`,
 };
 
 /* =========================
@@ -74,7 +74,7 @@ export async function runSocraticSession({
   fileBuffer,
   mimeType,
   chatHistory = [],
-  mode = "socratic" // 👈 Default to socratic if not specified
+  mode = "socratic", // 👈 Default to socratic if not specified
 }) {
   console.log(`[AI] Running session in mode: ${mode}`);
 
