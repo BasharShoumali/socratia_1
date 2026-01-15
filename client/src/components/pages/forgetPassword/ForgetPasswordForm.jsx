@@ -35,15 +35,9 @@ export default function ForgetPasswordForm({ onSuccess }) {
         setMessage(
           "Verification code sent (check server console for mock code)"
         );
-        setStep("verify");
+        setStep("reset");
       } else if (step === "verify") {
-        // Step 2: Verify the code
-        await apiFetch("/auth/verify-reset-code", {
-          method: "POST",
-          body: { email, code: verificationCode },
-        });
-
-        setMessage("Code verified. Enter your new password");
+        // DEV MODE: skip verification
         setStep("reset");
       } else {
         // Step 3: Reset password
