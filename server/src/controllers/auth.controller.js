@@ -197,9 +197,7 @@ export async function forgetPassword(req, res) {
     const resetExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
     // 🔑 MOCK: Log the code to console instead of sending email
-    console.log(
-      `\n🔑 MOCK EMAIL: Password reset code for ${user.email}: ${resetCode}\n`
-    );
+    //console.log(`\n🔑 MOCK EMAIL: Password reset code for ${user.email}: ${resetCode}\n`);
 
     console.log("[AUTH][FORGET_PASSWORD] Updating user with reset data");
 
