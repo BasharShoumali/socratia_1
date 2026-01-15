@@ -35,7 +35,7 @@ export default function ForgetPasswordForm({ onSuccess }) {
         setMessage(
           "Verification code sent (check server console for mock code)"
         );
-        setStep("reset");
+        setStep("verify");
       } else if (step === "verify") {
         // DEV MODE: skip verification
         setStep("reset");
