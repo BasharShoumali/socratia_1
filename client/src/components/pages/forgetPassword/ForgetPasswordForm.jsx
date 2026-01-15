@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useTheme from "../../../hooks/useTheme";
+import { apiFetch } from "../../../lib/api.js";
 import ForgetPasswordLayout from "./ForgetPasswordLayout";
 import ForgetPasswordSteps from "./ForgetPasswordSteps";
 import ForgetPasswordActions from "./ForgetPasswordActions";
@@ -25,17 +26,47 @@ export default function ForgetPasswordForm({ onSuccess }) {
 
     try {
       if (step === "email") {
-        setMessage("Verification code sent to your email");
+        // Step 1: Send email to get verification code
+        await apiFetch("/auth/forget-password", {
+          method: "POST",
+          body: { email },
+        });
+
+        setMessage(
+          "Verification code sent (check server console for mock code)"
+        );
         setStep("verify");
       } else if (step === "verify") {
+        // Step 2: Verify the code
+        await apiFetch("/auth/verify-reset-code", {
+          method: "POST",
+          body: { email, code: verificationCode },
+        });
+
+        setMessage("Code verified. Enter your new password");
         setStep("reset");
       } else {
+        // Step 3: Reset password
+        if (newPassword !== confirmPassword) {
+          throw new Error("Passwords do not match");
+        }
+
+        await apiFetch("/auth/reset-password", {
+          method: "POST",
+          body: {
+            email,
+            code: verificationCode,
+            newPassword,
+            confirmPassword,
+          },
+        });
+
         setMessage("Password reset successfully!");
-        setTimeout(() => onSuccess(), 1000);
+        setTimeout(() => onSuccess(), 1500);
       }
     } catch (err) {
       console.error(err);
-      setError("Something went wrong");
+      setError(err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
