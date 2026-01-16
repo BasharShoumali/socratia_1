@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { apiFetch } from "../../../lib/api.js";
+import Modal from "../../Modal";
 
 export default function UserProfilePage() {
   const user = JSON.parse(localStorage.getItem("socratia_user") || "null");
 
   const [email, setEmail] = useState(user?.email || "");
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
 
   async function updateEmail() {
-    if (!email) return alert("Email is required");
+    if (!email) {
+      setModalTitle("Validation Error");
+      setModalMessage("Email is required");
+      setModalOpen(true);
+      return;
+    }
     setLoading(true);
 
     await apiFetch("/user/email", {
@@ -16,7 +25,9 @@ export default function UserProfilePage() {
       body: { email },
     });
 
-    alert("Email updated successfully");
+    setModalTitle("Success");
+    setModalMessage("Email updated successfully");
+    setModalOpen(true);
     setLoading(false);
   }
 
@@ -67,6 +78,14 @@ export default function UserProfilePage() {
           </button>
         </div>
       </div>
+
+      <Modal
+        open={modalOpen}
+        title={modalTitle}
+        onClose={() => setModalOpen(false)}
+      >
+        <p style={{ color: "var(--text-main)" }}>{modalMessage}</p>
+      </Modal>
     </section>
   );
 }

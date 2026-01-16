@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Modal from "../Modal";
 
 function clearAuthStorage() {
   localStorage.removeItem("socratia_token");
@@ -10,6 +11,12 @@ export default function UserMenu({ user }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const [confirmModal, setConfirmModal] = useState({
+    open: false,
+    type: null,
+    message: "",
+    title: "",
+  });
 
   const displayName = user?.fullName || user?.email || "User";
 
@@ -82,7 +89,12 @@ export default function UserMenu({ user }) {
 
           <button
             onClick={() => {
-              if (window.confirm("Sign out and go to Sign In?")) logout();
+              setConfirmModal({
+                open: true,
+                type: "switch",
+                title: "Switch Account",
+                message: "Sign out and go to Sign In?",
+              });
             }}
             className="w-full px-4 py-3 text-left text-sm transition"
             style={{
@@ -96,8 +108,12 @@ export default function UserMenu({ user }) {
 
           <button
             onClick={() => {
-              if (window.confirm("Are you sure you want to sign out?"))
-                logout();
+              setConfirmModal({
+                open: true,
+                type: "signout",
+                title: "Sign Out",
+                message: "Are you sure you want to sign out?",
+              });
             }}
             className="w-full px-4 py-3 text-left text-sm text-red-400 transition"
             onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
@@ -107,6 +123,42 @@ export default function UserMenu({ user }) {
           </button>
         </div>
       )}
+
+      <Modal
+        open={confirmModal.open}
+        title={confirmModal.title}
+        onClose={() => setConfirmModal({ ...confirmModal, open: false })}
+      >
+        <p style={{ color: "var(--text-main)", marginBottom: "1rem" }}>
+          {confirmModal.message}
+        </p>
+        <div className="flex gap-3">
+          <button
+            onClick={() => {
+              setConfirmModal({ ...confirmModal, open: false });
+              if (confirmModal.type === "switch") {
+                setOpen(false);
+                logout();
+              } else if (confirmModal.type === "signout") {
+                logout();
+              }
+            }}
+            className="flex-1 rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600 transition"
+          >
+            Confirm
+          </button>
+          <button
+            onClick={() => setConfirmModal({ ...confirmModal, open: false })}
+            className="flex-1 rounded-lg border px-4 py-2 text-sm font-semibold transition"
+            style={{
+              borderColor: "var(--border-main)",
+              color: "var(--text-main)",
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }

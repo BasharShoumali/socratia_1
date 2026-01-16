@@ -1,11 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { apiFetch } from "../../../lib/api.js";
+import Modal from "../../Modal";
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
 
   async function loadUsers() {
     setLoading(true);
@@ -52,7 +56,9 @@ export default function AdminUsersPage() {
       body: { newPassword },
     });
 
-    alert("Password reset successfully.");
+    setModalTitle("Success");
+    setModalMessage("Password reset successfully.");
+    setModalOpen(true);
   }
 
   async function onChangeRole(id, email, currentRole) {
@@ -204,6 +210,14 @@ export default function AdminUsersPage() {
           </table>
         </div>
       )}
+
+      <Modal
+        open={modalOpen}
+        title={modalTitle}
+        onClose={() => setModalOpen(false)}
+      >
+        <p style={{ color: "var(--text-main)" }}>{modalMessage}</p>
+      </Modal>
     </section>
   );
 }
