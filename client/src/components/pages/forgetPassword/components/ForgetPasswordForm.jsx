@@ -1,10 +1,10 @@
 import { useState } from "react";
-import useTheme from "../../../hooks/useTheme";
-import { apiFetch } from "../../../lib/api.js";
-import ForgetPasswordLayout from "./ForgetPasswordLayout";
-import ForgetPasswordSteps from "./ForgetPasswordSteps";
-import ForgetPasswordActions from "./ForgetPasswordActions";
-import ForgetPasswordLinks from "./ForgetPasswordLinks";
+import useTheme from "../../../../hooks/useTheme.js";
+import { apiFetch } from "../../../../lib/api.js";
+import ForgetPasswordLayout from "./ForgetPasswordLayout.jsx";
+import ForgetPasswordSteps from "./ForgetPasswordSteps.jsx";
+import ForgetPasswordActions from "./ForgetPasswordActions.jsx";
+import ForgetPasswordLinks from "./ForgetPasswordLinks.jsx";
 
 export default function ForgetPasswordForm({ onSuccess }) {
   const { theme } = useTheme();

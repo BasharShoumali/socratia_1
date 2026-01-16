@@ -33,7 +33,7 @@ export default function Navbar({ variant = "home" }) {
         <div className="flex items-center">
           <NavLink to="/" className="flex items-center gap-3">
             <img
-              src={`${import.meta.env.BASE_URL}logo_head.png`}
+              src="/logo_head.png"
               alt="Socratia Logo"
               className="h-9 w-9 rounded-2xl object-cover ring-1 ring-blue-400/30
                          shadow-[0_0_25px_rgba(59,130,246,0.25)]"
