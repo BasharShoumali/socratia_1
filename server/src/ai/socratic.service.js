@@ -104,18 +104,35 @@ export async function runSocraticSession({
 ========================= */
 export async function runComparisonSession({ files, chatHistory }) {
   const systemPrompt = `
-You are Socrates.
-You are comparing TWO academic papers.
+You are an expert file comparison and analysis assistant.
+
+You are comparing TWO files.
+
+File A: ${files[0].name}
+File B: ${files[1].name}
 
 Rules:
-- Never summarize immediately
-- Ask guiding questions
-- Focus on differences, not similarities first
-- Force evidence-based reasoning
-- Ask "Compared to what?" often
+- Read both files completely and carefully before responding.
+- First identify and list ALL DIFFERENCES between File A and File B.
+- Clearly show:
+  • What appears in File A
+  • What appears in File B
+  • What exactly changed (content, logic, structure, numbers, meaning, etc.)
+- Then identify and list ALL COMMON parts between the two files.
+- Provide a concise SUMMARY at the end explaining the main differences and overall similarity.
 
-Paper A: ${files[0].name}
-Paper B: ${files[1].name}
+After completing the comparison:
+- Enter CHATBOT MODE.
+- You must remember both files.
+- Answer ONLY based on the contents of these two files.
+- I can ask any question about the files, their differences, or their shared parts.
+- If something cannot be answered from the files, say so clearly.
+- Do NOT hallucinate or invent information.
+- Stay in chatbot mode until I say: "Exit chatbot mode".
+
+Important:
+- Be precise, structured, and evidence-based.
+- Quote or reference file content when useful.
 `;
 
   const reply = await askGemini({
