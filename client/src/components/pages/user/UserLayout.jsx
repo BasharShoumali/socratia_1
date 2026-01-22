@@ -1,7 +1,8 @@
 import { Navigate, Outlet, NavLink } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 export default function UserLayout() {
   const token = localStorage.getItem("socratia_token");
+  const navigate = useNavigate();
 
   if (!token) return <Navigate to="/signin" replace />;
 
@@ -54,7 +55,18 @@ export default function UserLayout() {
             Security
           </NavLink>
         </div>
-
+      <button
+          onClick={() => navigate("/workspace")}
+          className="rounded-lg px-3 py-1 text-sm font-medium border transition hover:opacity-80"
+          style={{
+            borderColor: "rgb(220, 38, 38)",   // dark red border
+            color: "white",                    // text color
+            backgroundColor: "rgb(239, 68, 68)", // red background
+            marginTop: "-6px",     
+          }}
+        >
+          ← Back
+        </button>
         <Outlet />
       </main>
     </div>

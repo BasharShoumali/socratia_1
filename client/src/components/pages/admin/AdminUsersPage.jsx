@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { apiFetch } from "../../../lib/api.js";
 import Modal from "../../Modal";
-
+import { useNavigate } from "react-router-dom";
 export default function AdminUsersPage() {
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
@@ -10,6 +10,7 @@ export default function AdminUsersPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("");
+  const navigate = useNavigate();
 
   async function loadUsers() {
     setLoading(true);
@@ -98,7 +99,18 @@ export default function AdminUsersPage() {
           }}
         />
       </div>
-
+          <button
+          onClick={() => navigate("/workspace")}
+          className="rounded-lg px-3 py-1 text-sm font-medium border transition hover:opacity-80"
+          style={{
+            borderColor: "rgb(220, 38, 38)",   // dark red border
+            color: "white",                    // text color
+            backgroundColor: "rgb(239, 68, 68)", // red background
+            marginTop: "-6px",     
+          }}
+        >
+          ← Back
+        </button>
       {error && (
         <div
           className="mb-4 rounded-2xl border px-4 py-3 text-sm"
