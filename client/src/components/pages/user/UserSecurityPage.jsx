@@ -58,7 +58,6 @@ export default function UserSecurityPage() {
         "Your password was updated successfully."
       );
     } catch (err) {
-      // apiFetch غالبًا يرمي Error(message) من السيرفر
       openModal(
         "error",
         "Update failed",

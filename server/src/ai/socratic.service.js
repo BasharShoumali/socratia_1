@@ -104,92 +104,44 @@ export async function runSocraticSession({
 ========================= */
 export async function runComparisonSession({ files, chatHistory }) {
   const systemPrompt = `
-You are an expert content and logic comparison assistant.
+You are a comparison assistant.
 
-You are comparing the CONTENT and CONCEPTS of TWO files.
-Ignore all metadata such as:
-- File names
-- Page count
-- Layout
-- Formatting
-- Design
-- Headers / footers
-- Logos
-- File size
-- Number of slides/pages
+STRICT RULES:
 
-Focus ONLY on:
-- Concepts
-- Logic
-- Meaning
-- Topics covered
-- Explanations
-- Assumptions
-- Methods
-- Examples
-- Conclusions
-- Problem types and reasoning
+Output ONLY three sections in this exact order:
 
-File A: ${files[0].name}
-File B: ${files[1].name}
+Differences
 
-OUTPUT FORMAT RULES (MANDATORY):
+Similarities
 
---------------------------------------------------
-1. DIFFERENCES — CONTENT & LOGIC TABLE
---------------------------------------------------
+Summary
 
-Render a table exactly in this format:
+Focus only on the concepts, ideas, and important information in the two files.
 
-| Concept / Topic | File A (What it explains or teaches) | File B (What it explains or teaches) | Logical Difference |
-|-----------------|--------------------------------------|--------------------------------------|--------------------|
-| ...             | ...                                  | ...                                  | ...                |
+Ignore language, page count, formatting, or visual style.
 
-Rules:
-- Each row represents ONE meaningful conceptual or logical difference.
-- Do NOT mention page numbers, file size, or formatting.
-- Focus on meaning and reasoning only.
-- If a topic exists in one file but not the other, explain the conceptual gap.
+Do not mention file names repeatedly.
 
---------------------------------------------------
-2. SIMILARITIES — CONTENT & LOGIC TABLE
---------------------------------------------------
+Do not discuss design, layout, or technical details like bilingual text.
 
-Render a table exactly in this format:
+Format:
 
-| Concept / Topic | Shared Logic or Meaning | Notes |
-|-----------------|--------------------------|-------|
-| ...             | ...                      | ...   |
+Use clear, simple bullet points with numbers (1, 2, 3…) for Differences and Similarities.
 
-Rules:
-- Only include concepts that truly exist in BOTH files.
-- Describe the shared understanding or reasoning.
+Keep each bullet short and specific.
 
---------------------------------------------------
-3. SUMMARY — CONCEPTUAL COMPARISON
---------------------------------------------------
+Include only meaningful points, max 5 per section.
 
-Write a concise summary explaining:
-- The major conceptual differences.
-- The level of conceptual overlap.
-- How the learning or logic focus differs between the two files.
+Summary:
 
---------------------------------------------------
-BEHAVIOR RULES:
---------------------------------------------------
-- Analyze both files completely before responding.
-- Compare only CONTENT and LOGIC.
-- Ignore superficial or structural differences.
-- Do NOT hallucinate or invent information.
-- Use evidence from the files when helpful.
+One short paragraph (2–3 lines).
 
-After completing the tables and summary:
-- Enter CHATBOT MODE.
-- Remember both files.
-- Answer ONLY based on the content of these two files.
-- If something cannot be answered from the files, say so clearly.
-- Stay in chatbot mode until I say: "Exit chatbot mode".
-`;
+Clearly state the main conceptual difference and the core similarity.
+
+Make it easy to understand quickly.
+`
+
+
 
   const reply = await askGemini({
     prompt: systemPrompt,

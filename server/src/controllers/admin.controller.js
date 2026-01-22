@@ -27,7 +27,7 @@ export async function deleteUser(req, res) {
   try {
     const { id } = req.params;
 
-    // Prevent admin from deleting themself (optional but safer)
+    // Prevent admin from deleting themself
     if (req.user?.sub === id) {
       return res
         .status(400)
@@ -90,7 +90,7 @@ export async function changeUserRole(req, res) {
         .json({ ok: false, error: "Role must be 'user' or 'admin'." });
     }
 
-    // Prevent admin from demoting themself (optional but safer)
+    // Prevent admin from demoting themself 
     if (req.user?.sub === id && role !== "admin") {
       return res
         .status(400)

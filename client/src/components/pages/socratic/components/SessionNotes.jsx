@@ -10,7 +10,6 @@ export default function SessionNotes({
   const [notes, setNotes] = useState([]);
   const [saving, setSaving] = useState(false);
 
-  // ✅ عند History mode: حمّل notes الجاهزة
   useEffect(() => {
     if (readOnly) {
       setNotes(initialNotes);
@@ -64,7 +63,6 @@ export default function SessionNotes({
         </p>
       )}
 
-      {/* ✏️ Input (Learn mode فقط) */}
       {!readOnly && (
         <>
           <textarea

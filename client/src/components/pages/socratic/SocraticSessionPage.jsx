@@ -17,14 +17,13 @@ export default function SocraticSessionPage() {
   const paperName = location.state?.paperName || "Selected Paper";
   const sessionKey = location.state?.sessionKey;
 
-  // 🔑 hook يُستدعى دائمًا (في المكان الصحيح)
   const session = useSocraticSession({
     fileId,
     sessionKey,
     enabled: mode !== "view",
   });
 
-  const { setMessages } = session; // ✅ الآن آمن
+  const { setMessages } = session; 
   const [notes, setNotes] = useState([]);
 
   // 🔐 Auth guard
@@ -33,12 +32,11 @@ export default function SocraticSessionPage() {
     if (!token) window.location.href = "/signin";
   }, []);
 
-  // 🛑 حماية
   useEffect(() => {
     if (!fileId) navigate("/workspace");
   }, [fileId, navigate]);
 
-  // 📥 تحميل chat قديم (مرة واحدة فقط)
+ 
   useEffect(() => {
     if (mode === "view" && chatId) {
       apiFetch(`/ai/chats/${chatId}`).then((res) => {
@@ -47,7 +45,7 @@ export default function SocraticSessionPage() {
         setNotes(res.chat?.notes || []);
       });
     }
-  }, [mode, chatId]); // ❌ لا تضع session هنا
+  }, [mode, chatId]); 
 
   return (
     <div
